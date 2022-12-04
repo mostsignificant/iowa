@@ -1,0 +1,40 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+env:
+  DOCKER_IMAGE_NAME: ${{ github.actor }}/${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login
+            -u $DOCKER_USERNAME
+            -p $DOCKER_PASSWORD
+
+      - name: Build the Docker image
+        run: |
+          docker build .
+            --file Dockerfile
+            --tag {{ env.DOCKER_IMAGE_NAME }}:${{github.ref_name}}
+            --tag {{ env.DOCKER_IMAGE_NAME }}:latest
+
+      - name: Push the Docker image
+        run: |
+          docker push {{ env.DOCKER_IMAGE_NAME }}
