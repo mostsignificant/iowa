@@ -1,4 +1,5 @@
 ![build](https://github.com/mostsignificant/iowa/actions/workflows/build.yml/badge.svg)
+![docker](https://github.com/mostsignificant/iowa/actions/workflows/docker.yml/badge.svg)
 
 # IOWA
 
