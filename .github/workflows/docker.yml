@@ -16,4 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag {{ env.DOCKER_IMAGE_NAME }}:$(date +%s)
+        run: |
+          echo {{ env.DOCKER_IMAGE_NAME }}:$(date +%s) &&
+          docker build . --file Dockerfile --tag {{ env.DOCKER_IMAGE_NAME }}:$(date +%s)
