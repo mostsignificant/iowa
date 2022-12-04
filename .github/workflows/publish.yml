@@ -3,7 +3,7 @@ name: publish
 on:
   push:
     tags:
-      - "*.*.*"
+      - "*"
 
 env:
   DOCKER_IMAGE_NAME: ${{ github.repository }}
