@@ -1,3 +1,5 @@
+![build](https://github.com/mostsignificant/iowa/actions/workflows/build.yml/badge.svg)
+
 # IOWA
 
 A HTTP-based key-value-store written in Rust.
