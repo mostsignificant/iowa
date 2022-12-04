@@ -37,5 +37,6 @@ You can build the IOWA server by cloning the repository and building via cargo.
 
 ```sh
 git clone https://github.com/mostsignificant/iowa.git
+cd iowa
 cargo build --release
 ```
