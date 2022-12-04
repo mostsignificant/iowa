@@ -6,7 +6,7 @@ on:
       - "*.*.*"
 
 env:
-  DOCKER_IMAGE_NAME: ${{ github.actor }}/${{ github.repository }}
+  DOCKER_IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push:
