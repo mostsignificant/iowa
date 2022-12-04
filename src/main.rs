@@ -1,5 +1,6 @@
 use actix_web::{
-    get, http::header::ContentType, post, web, App, HttpRequest, HttpResponse, HttpServer,
+    get, http::header::ContentType, middleware::Logger, post, web, App, HttpRequest, HttpResponse,
+    HttpServer,
 };
 use clap::Parser;
 use std::collections::HashMap;
@@ -13,7 +14,6 @@ struct AppState {
 /// Returns a value from the given path.
 #[get("/{key:.*}")]
 async fn get(request: HttpRequest, data: web::Data<AppState>) -> HttpResponse {
-    println!("{:?}", request);
     let key: String = request.uri().to_string();
 
     match data.store.lock().unwrap().get(&key) {
@@ -33,8 +33,6 @@ async fn get(request: HttpRequest, data: web::Data<AppState>) -> HttpResponse {
 /// Sets a value to the given path.
 #[post("/{key:.*}")]
 async fn set(request: HttpRequest, post: web::Bytes, data: web::Data<AppState>) -> HttpResponse {
-    println!("{:?}", request);
-
     let key: String = request.uri().to_string();
     let value = String::from_utf8(post.to_vec()).unwrap();
 
@@ -66,12 +64,20 @@ struct Args {
 async fn main() -> std::io::Result<()> {
     let args = Args::parse();
 
+    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
+
     let state = web::Data::new(AppState {
         store: Mutex::new(HashMap::new()),
     });
 
-    HttpServer::new(move || App::new().app_data(state.clone()).service(get).service(set))
-        .bind((args.host, args.port))?
-        .run()
-        .await
+    HttpServer::new(move || {
+        App::new()
+            .app_data(state.clone())
+            .service(get)
+            .service(set)
+            .wrap(Logger::new("%a %{User-Agent}i"))
+    })
+    .bind((args.host, args.port))?
+    .run()
+    .await
 }
