@@ -32,8 +32,8 @@ jobs:
         run: |
           docker build . \
             --file Dockerfile \
-            --tag {{ env.DOCKER_IMAGE_NAME }}:${{github.ref_name}} \
-            --tag {{ env.DOCKER_IMAGE_NAME }}:latest
+            --tag ${{ env.DOCKER_IMAGE_NAME }}:${{github.ref_name}} \
+            --tag ${{ env.DOCKER_IMAGE_NAME }}:latest
 
       - name: Push the Docker image
         run: |
