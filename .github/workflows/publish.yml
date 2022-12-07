@@ -37,4 +37,4 @@ jobs:
 
       - name: Push the Docker image
         run: |
-          docker push ${{ env.DOCKER_IMAGE_NAME }}
+          docker push --all-tags ${{ env.DOCKER_IMAGE_NAME }}
