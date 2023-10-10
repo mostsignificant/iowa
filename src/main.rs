@@ -1,6 +1,6 @@
 use actix_web::{
-    get, http::header::ContentType, middleware::Logger, post, web, App, HttpRequest, HttpResponse,
-    HttpServer,
+    delete, get, http::header::ContentType, middleware::Logger, post, web, App, HttpRequest,
+    HttpResponse, HttpServer,
 };
 use clap::Parser;
 use std::collections::HashMap;
@@ -46,6 +46,25 @@ async fn set(request: HttpRequest, post: web::Bytes, data: web::Data<AppState>) 
     }
 }
 
+/// Removes a given key.
+#[delete("/{key:.*}")]
+async fn del(request: HttpRequest, data: web::Data<AppState>) -> HttpResponse {
+    let key: String = request.uri().to_string();
+
+    match data.store.lock().unwrap().remove(&key) {
+        Some(_) => {
+            return HttpResponse::Ok()
+                .content_type(ContentType::plaintext())
+                .body("key and value removed")
+        }
+        _ => {
+            return HttpResponse::NotFound()
+                .content_type(ContentType::plaintext())
+                .body("key not found")
+        }
+    }
+}
+
 /// Simple HTTP-based key-value-store
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -75,6 +94,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(state.clone())
             .service(get)
             .service(set)
+            .service(del)
             .wrap(Logger::new("%a %{User-Agent}i"))
     })
     .bind((args.host, args.port))?
