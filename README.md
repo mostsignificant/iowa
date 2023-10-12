@@ -3,7 +3,8 @@
 
 # IOWA
 
-A HTTP-based key-value-store written in Rust.
+A HTTP-based key-value-store written in Rust. I wrote a blog article about building it on
+[medium](https://medium.com/@mostsignificant/how-to-build-a-simple-but-efficient-key-value-store-with-rust-and-actix-b65ffc2ab4a0).
 
 ## Documentation
 
