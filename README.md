@@ -4,7 +4,8 @@
 # IOWA
 
 A HTTP-based key-value-store written in Rust. I wrote a blog article about building it on
-[medium](https://medium.com/@mostsignificant/how-to-build-a-simple-but-efficient-key-value-store-with-rust-and-actix-b65ffc2ab4a0).
+[Medium](https://medium.com/@mostsignificant/how-to-build-a-simple-but-efficient-key-value-store-with-rust-and-actix-b65ffc2ab4a0) or my blog on 
+[GitHub Pages](https://mostsignificant.github.io/2023/10/09/how-to-build-a-simple-but-efficient-key-value-store-with-rust-and-actix.html).
 
 ## Documentation
 
