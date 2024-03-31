@@ -2,7 +2,7 @@
 # iowa build stage
 ########################################################################################################################
 
-FROM rust:1.63.0-slim as build
+FROM rust:1.77.0-slim as build
 
 COPY ./src ./src
 COPY ./Cargo.lock .
