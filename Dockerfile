@@ -21,4 +21,4 @@ USER iowa
 
 COPY --from=build --chown=iowa:iowa ./target/release/iowa /app/iowa
 
-CMD ["./app/iowa"]
+ENTRYPOINT ["./app/iowa"]
